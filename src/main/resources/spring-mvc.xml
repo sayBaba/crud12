@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation=" http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd "
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans">
+
+        <!-- 扫描包路径 -->
+        <context:component-scan base-package="com.hzit.crud.controller"></context:component-scan>
+
+        <!-- 视图解析器-->
+
+    <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+<!--
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+-->
+        <!-- 设置前缀的位置 -->
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <!-- 设置后缀 -->
+        <property name="suffix" value=".html"></property>
+    </bean>
+
+    <!--静态资源映射-->
+    <mvc:resources mapping="/js/**" location="/WEB-INF/js/"/>
+
+    <!--替代注解处理器和适配器的配置 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+            </list>
+        </property>
+    </bean>
+
+
+
+
+
+
+</beans>
