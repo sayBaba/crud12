@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzit.crud.mapper.MenusMapper" >
+  <resultMap id="BaseResultMap" type="com.hzit.crud.model.Menus" >
+    <id column="menu_id" property="menuId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="href" property="href" jdbcType="VARCHAR" />
+    <result column="perms" property="perms" jdbcType="VARCHAR" />
+    <result column="spread" property="spread" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="sorting" property="sorting" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    menu_id, title, icon, href, perms, spread, parent_id, sorting
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_menus
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_menus
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hzit.crud.model.Menus" >
+    insert into tb_menus (menu_id, title, icon, 
+      href, perms, spread, 
+      parent_id, sorting)
+    values (#{menuId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{href,jdbcType=VARCHAR}, #{perms,jdbcType=VARCHAR}, #{spread,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=BIGINT}, #{sorting,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hzit.crud.model.Menus" >
+    insert into tb_menus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="href != null" >
+        href,
+      </if>
+      <if test="perms != null" >
+        perms,
+      </if>
+      <if test="spread != null" >
+        spread,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="sorting != null" >
+        sorting,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null" >
+        #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="perms != null" >
+        #{perms,jdbcType=VARCHAR},
+      </if>
+      <if test="spread != null" >
+        #{spread,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="sorting != null" >
+        #{sorting,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hzit.crud.model.Menus" >
+    update tb_menus
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null" >
+        href = #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="perms != null" >
+        perms = #{perms,jdbcType=VARCHAR},
+      </if>
+      <if test="spread != null" >
+        spread = #{spread,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="sorting != null" >
+        sorting = #{sorting,jdbcType=BIGINT},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hzit.crud.model.Menus" >
+    update tb_menus
+    set title = #{title,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      href = #{href,jdbcType=VARCHAR},
+      perms = #{perms,jdbcType=VARCHAR},
+      spread = #{spread,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      sorting = #{sorting,jdbcType=BIGINT}
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </update>
+</mapper>

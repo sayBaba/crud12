@@ -17,6 +17,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+      <kaptcha.version>2.3.2</kaptcha.version>
+
   </properties>
 
   <dependencies>
@@ -206,6 +208,30 @@
         <artifactId>jcl-over-slf4j</artifactId>
         <version>1.7.25</version>
     </dependency>
+
+      <!-- https://mvnrepository.com/artifact/Javax.servlet/jstl -->
+      <dependency>
+          <groupId>Javax.servlet</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+      </dependency>
+
+      <!-- kaptcha -->
+      <dependency>
+          <groupId>com.github.penggle</groupId>
+          <artifactId>kaptcha</artifactId>
+          <version>${kaptcha.version}</version>
+      </dependency>
+
+
+      <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.12</version>
+          <scope>provided</scope>
+      </dependency>
+
 
 
   </dependencies>

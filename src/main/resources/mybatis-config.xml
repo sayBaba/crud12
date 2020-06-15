@@ -7,7 +7,11 @@
 <configuration>
 
     <mappers>
-        <mapper resource="mappers/UserMapper.xml"></mapper>
+        <mapper resource="mappers/AdminMapper.xml"></mapper>
+        <mapper resource="mappers/MenusMapper.xml"></mapper>
+        <mapper resource="mappers/RolesMapper.xml"></mapper>
+        <mapper resource="mappers/RolesMenusMapper.xml"></mapper>
+
     </mappers>
 
 
