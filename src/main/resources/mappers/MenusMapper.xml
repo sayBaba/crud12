@@ -125,4 +125,22 @@
       sorting = #{sorting,jdbcType=BIGINT}
     where menu_id = #{menuId,jdbcType=BIGINT}
   </update>
+
+    <select id="queryByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_menus
+        where parent_id = 0
+    </select>
+
+
+    <select id="queryChildMenus" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from tb_menus
+        where parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+
+
 </mapper>

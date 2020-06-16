@@ -2,7 +2,9 @@ package com.hzit.crud.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.hzit.crud.req.LoginReq;
+import com.hzit.crud.resp.MenuResp;
 import com.hzit.crud.resp.RespVo;
+import com.hzit.crud.service.impl.IMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,10 @@ import java.io.IOException;
 public class AdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
+    @Autowired
+    private IMenuService iMenuService;
+
 
     /**
      * 验证码
@@ -63,7 +70,7 @@ public class AdminController {
      */
     @RequestMapping("/vcode")
     public void createKaptcha(HttpServletRequest request, HttpServletResponse response){
-        logger.info("生成验证码");
+        logger.info("生成验证码....");
         String text = captchaProducer.createText();
         BufferedImage image = captchaProducer.createImage(text);
         //放到session中,登录的时候要验证
@@ -74,6 +81,22 @@ public class AdminController {
         } catch (IOException e) {
             logger.error("IOException",e);
         }
+    }
+
+    /**
+     * 加载左侧菜单
+     */
+    @ResponseBody
+    @RequestMapping("/getMenus")
+    public MenuResp loadLeftMenu(){
+        logger.info("查询菜单列表.....");
+        MenuResp menuResp = iMenuService.getMenus();
+        return menuResp;
+    }
+
+    @RequestMapping("/main")
+    public String loadMain(){
+        return "main";
     }
 
 }
