@@ -10,6 +10,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,14 @@ public class AdminController {
             logger.info("验证码为空");
             return RespVo.getFail("验证码为空");
         }
+        if (StringUtils.isEmpty(password)){
+            logger.info("password为空");
+            return RespVo.getFail("password为空");
+        }
+        if (StringUtils.isEmpty(userName)){
+            logger.info("userName为空");
+            return RespVo.getFail("userName为空");
+        }
 
        String sessionCode = (String)request.getSession().getAttribute("kaptcha");
 
@@ -70,31 +79,49 @@ public class AdminController {
             return RespVo.getFail("输入验证码不正确");
         }
 
+//        //shiro 登录逻辑 TODO
+
         Subject subject = SecurityUtils.getSubject();
-//        password = MD5.makeMD5(password);
 
+        //明文转成MD5
+        String md5Password = new Md5Hash(password).toString();
+
+        new Au
+
+
+        logger.info("加密后的密码："+ md5Password);
+
+
+
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName,md5Password);
+
+        //判断是否登录
         if(!subject.isAuthenticated()){
-            UsernamePasswordToken token = new UsernamePasswordToken(userName, "e10adc3949ba59abbe56e057f20f883e");
-            try {
-                subject.login(token);
-                // 剔除其他此账号在其它地方登录
-
-            } catch (UnknownAccountException ex1) {
-
-                ex1.printStackTrace();
-            } catch (IncorrectCredentialsException ex2) {
-                ex2.printStackTrace();
-
-            }catch (AuthenticationException ex3) {
-                ex3.printStackTrace();
-
+            try{
+                subject.login(usernamePasswordToken);
+            }catch (AuthenticationException e){ //TODO
+                logger.error("AuthenticationException",e);
+                return RespVo.getFail("登录失败");
             }
 
         }
 
-        //shiro 登录逻辑 TODO
-
         return RespVo.getSucess();
+    }
+
+
+    /**
+     * 退出
+     */
+    @ResponseBody
+    @RequestMapping("/loginOut")
+    public RespVo login(HttpServletRequest request){
+
+        Subject subject = SecurityUtils.getSubject();
+
+        subject.logout();
+
+        return  null;
     }
 
 

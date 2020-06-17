@@ -160,4 +160,26 @@
       role_id = #{roleId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!-- 根据用户名查找-->
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+         from tb_admin
+        where username = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryUserPerms" parameterType="java.lang.String" resultType="java.lang.String">
+
+        select m.perms from  tb_menus m,tb_admin a,tb_roles_menus r
+
+    WHERE  m.menu_id = r.menu_id
+    and r.role_id = a.role_id
+    and m.perms is not null
+
+    and a.username = 'admin'
+    and perms != ''
+
+    </select>
+
 </mapper>

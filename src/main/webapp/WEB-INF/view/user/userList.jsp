@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"
 	pageEncoding="UTF-8"%>
-<%--
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
---%>
 <%@ include file="/WEB-INF/view/include/taglib.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -66,7 +64,8 @@
 				</div>
 				<a class="layui-btn search_btn" lay-submit="" data-type="search"
 					lay-filter="search">查询</a>
-				<shiro:hasPermission name="user:user:save">
+
+				<shiro:hasPermission name="user:user:save1">
 					<div class="layui-inline">
 						<a class="layui-btn layui-btn-normal userAdd_btn">添加用户</a>
 					</div>

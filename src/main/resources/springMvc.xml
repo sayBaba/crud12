@@ -16,7 +16,6 @@
         <!-- 扫描包路径 -->
         <context:component-scan base-package="com.hzit.crud.controller"></context:component-scan>
 
-        <!-- 视图解析器-->
 
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -46,14 +45,11 @@
         </property>
     </bean>
 
-
-
     <!--Shiro配置-->
     <aop:config proxy-target-class="true"></aop:config>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager" />
     </bean>
-
 
 
 

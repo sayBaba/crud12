@@ -1,88 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans
-        xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:p="http://www.springframework.org/schema/p"
-        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
-        xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/aop
-         http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/p
-       http://www.springframework.org/schema/p/spring-p.xsd">
+        http://www.springframework.org/schema/p/spring-p.xsd">
 
-    <context:component-scan base-package="com.hzit.crud.shiro"/>
 
-    <!--配置securityManager，也就是shiro的核心-->
+    <context:component-scan base-package="com.hzit.crud.shiro"></context:component-scan>
+
+    <!-- 1. 配置securityManager，也就是shiro的核心。-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-    <property name="realm" ref="myRealm" />
-        <!-- 缓存管理器 -->
+        <property name="realm" ref="myRealm" />
+
+        <!-- 缓存管理器,shiro的数据缓存起来 -->
         <property name="cacheManager" ref="cacheManager" />
         <property name="sessionManager" ref="sessionManager"></property>
     </bean>
 
 
-    <!--  配置cacheManager(缓存管理-->
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+    <!--2.配置cacheManager 缓存shiro-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
+    </bean>
 
-    <!-- 3. 配置Realm，自己定义的shiroRealm，必须实现org.apache.shiro.realm.Realm这个接口-->
-    <bean id="myRealm" class="com.hzit.crud.shiro.MyRealm"></bean>
+    <!--3.配置reaml -->
+    <bean id="myRealm" class="com.hzit.crud.shiro.MyReaml"></bean>
 
-    <!--配置lifecycleBeanPostProcessor， 可以自动的来调用配置在spring IOC 容器中shiro bean的生命周期方法 -->
+
+    <!--4.配置lifecycleBeanPostProcessor， 可以自动的来调用配置在spring IOC 容器中shiro bean的生命周期方法 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
-    <!-- 启用IOC容器中使用shiro的注解，但必须在配置 lifecycleBeanPostProcessor才可以使用  -->
-
+    <!--5.启用IOC容器中使用shiro的注解，但必须在配置 lifecycleBeanPostProcessor才可以使用 -->
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-           depends-on="lifecycleBeanPostProcessor" />
-      <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+            depends-on="lifecycleBeanPostProcessor" />
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
-      </bean>
+    </bean>
 
-    <!-- 存储登录用户的信息 -->
-       <bean id="sessionDao" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
-        <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-           <!-- 设置超时时间 -->
-         <property name="globalSessionTimeout" value="14400000"/>
-           <property name="sessionDAO" ref="sessionDao"/>
-         </bean>
+    <!-- 6.存储登录用户的信息 -->
+    <bean id="sessionDao" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 设置超时时间 -->
+        <property name="globalSessionTimeout" value="14400000"/>
+        <property name="sessionDAO" ref="sessionDao"/>
+    </bean>
+
+
+    <!-- 7.拦截器，拦截规则 -->
 
     <!--
-     6. 配置shiroFilter
-    6.1 id必须和web.xml 文件中配置的DelegatingFilterProxy的filter-name一致
-     -->
-       <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-           <property name="securityManager" ref="securityManager" />
-           <property name="loginUrl" value="/index.jsp" /><!-- 项目未登录访问，默认进入的页面， -->
-          <!-- <property name="successUrl" value="/user/list.do" />-->
-           <!-- <property name="unauthorizedUrl" value="/index.jsp" />  -->
+       6. 配置shiroFilter
+       6.1 id必须和web.xml 文件中配置的DelegatingFilterProxy的filter-name一致
+        -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/login.jsp" /><!-- 项目未登录访问，默认进入的页面， -->
+        <!-- <property name="successUrl" value="/user/list.do" />-->
+        <!-- <property name="unauthorizedUrl" value="/index.jsp" />  -->
 
-           <!-- shiro的过滤器 - 过滤规则
+        <!-- shiro的过滤器 - 过滤规则
                                     常用的过滤器：
-             authc：必须认证才能通过
-             anon：游客可以通过
-             logout：注销的请求
-          -->
-           <property name="filterChainDefinitions">
-               <value>
-                   <!-- 需要放行在这里配置，未放行的会被拦截，如下， -->
-                   /css/**=anon
-                 /images/**=anon
+            authc：必须认证才能通过
+            anon：游客可以通过
+            logout：注销的请求
+         -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 需要放行在这里配置，未放行的会被拦截，如下， -->
+                /css/**=anon
+                /images/**=anon
                 /js/**=anon
-                   /**=authc
-                </value>
-            </property>
+                /layui/**=anon
+                /sys/login/**=anon
+                /sys/vcode/**=anon
+                /**=authc
+            </value>
+        </property>
 
-     </bean>
-
-
+    </bean>
 
 </beans>

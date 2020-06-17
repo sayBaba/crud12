@@ -239,12 +239,14 @@
           <artifactId>shiro-web</artifactId>
           <version>1.4.0</version>
       </dependency>
+
       <!-- 导入shiro-core的依赖 -->
       <dependency>
           <groupId>org.apache.shiro</groupId>
           <artifactId>shiro-core</artifactId>
           <version>1.4.0</version>
       </dependency>
+
       <!-- 导入shiro-spring 的依赖-->
       <dependency>
           <groupId>org.apache.shiro</groupId>
