@@ -27,6 +27,18 @@
             <!-- 读取mybatis全局xml-->
             <property name="configLocation" value="classpath:mybatis-config.xml"></property>
             <property name="dataSource" ref="dataSource"></property>
+
+            <!-- 配置mybatis分页插件PageHelper -->
+               <property name="plugins">
+                       <array>
+                           <bean class="com.github.pagehelper.PageInterceptor">
+                                <property name="properties">
+                                    <!-- 什么都不配，使用默认的配置 -->
+                                   <value></value>
+                                </property>
+                             </bean>
+                        </array>
+                   </property>
         </bean>
 
         <!-- dao注入-->

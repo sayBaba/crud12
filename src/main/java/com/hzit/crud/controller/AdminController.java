@@ -86,7 +86,7 @@ public class AdminController {
         //明文转成MD5
         String md5Password = new Md5Hash(password).toString();
 
-        new Au
+//        new Au
 
 
         logger.info("加密后的密码："+ md5Password);

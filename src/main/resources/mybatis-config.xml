@@ -6,13 +6,27 @@
 <!-- 根标签， mybatis 配置要加这里 -->
 <configuration>
 
+<!--
+    <plugins>
+        &lt;!&ndash; com.github.pagehelper为PageHelper类所在包名 &ndash;&gt;
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            &lt;!&ndash; 使用MySQL方言的分页 &ndash;&gt;
+            <property name="helperDialect" value="mysql"/>&lt;!&ndash;如果使用mysql，这里value为mysql&ndash;&gt;
+            <property name="pageSizeZero" value="true"/>
+        </plugin>
+    </plugins>
+-->
+
     <mappers>
         <mapper resource="mappers/AdminMapper.xml"></mapper>
         <mapper resource="mappers/MenusMapper.xml"></mapper>
         <mapper resource="mappers/RolesMapper.xml"></mapper>
         <mapper resource="mappers/RolesMenusMapper.xml"></mapper>
+        <mapper resource="mappers/UserMapper.xml"></mapper>
+
 
     </mappers>
+
 
 
 
